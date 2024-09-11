@@ -1,0 +1,3 @@
+rootProject.name = 'yesterday'
+
+include 'yesterday-api', 'yesterday-domain'
