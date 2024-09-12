@@ -8,12 +8,13 @@ tasks.named('jar'){
 
 bootJar {
     enabled = true
-    mainClass = 'se.sowl.jigeumapi.JigeumApiApplication'
+    mainClass = 'se.sowl.yesterdayapi.YesterdayApiApplication'
 }
 
 jar {
     enabled = true
 }
+
 dependencies {
     implementation project(':yesterday-domain')
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
