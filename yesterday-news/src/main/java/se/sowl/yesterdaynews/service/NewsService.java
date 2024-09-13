@@ -1,4 +1,4 @@
-package se.sowl.yesterdaynewsmanagement.service;
+package se.sowl.yesterdaynews.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;

@@ -1,4 +1,4 @@
-package se.sowl.yesterdaynewsmanagement.kafka;
+package se.sowl.yesterdaynews.kafka;
 
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;

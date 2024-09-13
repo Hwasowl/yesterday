@@ -1,3 +1,3 @@
 rootProject.name = 'yesterday'
 
-include 'yesterday-api', 'yesterday-domain', 'yesterday-kafka', 'yesterday-news-management', 'yesterday-ai'
+include 'yesterday-api', 'yesterday-domain', 'yesterday-kafka', 'yesterday-news', 'yesterday-ai'

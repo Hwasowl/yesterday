@@ -21,5 +21,6 @@ public class NewsController {
         List<BingSearchResponse> yesterdayNews = newsService.getYesterdayNews();
         System.out.println(yesterdayNews);
 //        openAiService.summarizeNews(yesterdayNews.get(0).get("description"));
+        // database save
     }
 }

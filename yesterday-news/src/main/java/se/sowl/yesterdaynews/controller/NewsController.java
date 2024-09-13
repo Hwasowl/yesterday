@@ -1,10 +1,9 @@
-package se.sowl.yesterdaynewsmanagement.controller;
+package se.sowl.yesterdaynews.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import se.sowl.yesterdaydomain.news.domain.News;
-import se.sowl.yesterdaynewsmanagement.service.NewsService;
+import se.sowl.yesterdaynews.service.NewsService;
 
 import java.util.List;
 
