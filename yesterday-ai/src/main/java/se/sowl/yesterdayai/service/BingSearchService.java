@@ -12,6 +12,7 @@ import se.sowl.yesterdayai.dto.BingSearchResponse;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,13 +23,16 @@ public class BingSearchService {
 
     public List<BingSearchResponse> getYesterdayNews() {
         HttpEntity<String> header = generateHttpHeader();
-        String searchUrl = "https://api.bing.microsoft.com/v7.0/news/search?q=한국 주요뉴스&freshness=Day&sortBy=Date&count=3&mkt=ko-KR";
-        return search(searchUrl, header).stream().map(BingSearchResponse::new).toList();
+        String searchUrl = "https://api.bing.microsoft.com/v7.0/news/search?q=한국 주요뉴스&freshness=Day&sortBy=Date&count=10&mkt=ko-KR";
+        List<Map<String, Object>> newsItems = search(searchUrl, header);
+        return newsItems.stream()
+            .map(BingSearchResponse::new)
+            .collect(Collectors.toList());
     }
 
-    private List<Map<String, String>> search(String bingSearchUrl, HttpEntity<String> header) {
-        ResponseEntity<Map> response = restTemplate.exchange(bingSearchUrl, HttpMethod.GET, header, Map.class);
-        return (List<Map<String, String>>) response.getBody().get("value");
+    private List<Map<String, Object>> search(String searchUrl, HttpEntity<String> header) {
+        ResponseEntity<Map> response = restTemplate.exchange(searchUrl, HttpMethod.GET, header, Map.class);
+        return (List<Map<String, Object>>) response.getBody().get("value");
     }
 
     private HttpEntity<String> generateHttpHeader() {
