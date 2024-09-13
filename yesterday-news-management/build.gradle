@@ -1,0 +1,26 @@
+tasks.named('bootJar'){
+    enabled = true
+}
+
+tasks.named('jar'){
+    enabled = false
+}
+
+bootJar {
+    enabled = true
+    mainClass = 'se.sowl.yesterdaynewsmanagement.YesterdayNewsManagementApplication'
+}
+
+jar {
+    enabled = true
+}
+
+
+dependencies {
+    implementation project(':yesterday-domain')
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.kafka:spring-kafka'
+}

@@ -1,4 +1,4 @@
-package se.sowl.yestdaykafka.news;
+package se.sowl.yestdaykafka.kafka.news;
 
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
