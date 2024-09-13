@@ -1,6 +1,7 @@
 package se.sowl.yesterdaynews.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.sowl.yesterdaynews.service.NewsService;
 
@@ -10,8 +11,10 @@ import se.sowl.yesterdaynews.service.NewsService;
 public class NewsController {
     private final NewsService newsService;
 
-    @GetMapping
-    public void createNews() {
-        newsService.processAndSaveNews();
+    @PostMapping("/yesterday")
+    public ResponseEntity.BodyBuilder createNews() {
+        newsService.saveYesterdayNews();
+        return ResponseEntity.ok();
     }
+
 }

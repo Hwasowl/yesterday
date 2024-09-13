@@ -17,7 +17,7 @@ public class NewsService {
     private final GPTService gptService;
     private final NewsRepository newsRepository;
 
-    public void processAndSaveNews() {
+    public void saveYesterdayNews() {
         List<BingSearchResponse> searchResults = bingSearchService.getYesterdayNews();
         List<News> processedNews = processSearchResults(searchResults);
         saveArticles(processedNews);
