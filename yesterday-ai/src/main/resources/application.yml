@@ -1,0 +1,8 @@
+azure:
+  bing-search:
+    api-key:
+  openai:
+    api-key:
+server:
+  port: 8090
+

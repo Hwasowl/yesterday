@@ -17,16 +17,17 @@ public class News {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 1000)
     private String title;
 
-    @Column(length = 1000)
+    @Column(length = 5000)
     private String content;
 
-    @Column(length = 500)
-    private String summary;
+    @Column(name = "thumbnail_url")
+    private String thumbnailUrl;
 
-    @Column(name = "url")
-    private String url;
+    @Column(name = "news_url")
+    private String newsUrl;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
