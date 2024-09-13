@@ -12,7 +12,7 @@ import se.sowl.yesterdaynews.service.NewsService;
 public class NewsRabbitConsumer {
     private final NewsService newsService;
 
-    @RabbitListener(queues = "news-queue")
+    @RabbitListener(queues = "news-update-queue")
     public void receiveNewsUpdateMessage(String message) {
         if ("UPDATE_NEWS".equals(message)) {
             newsService.saveYesterdayNews();
