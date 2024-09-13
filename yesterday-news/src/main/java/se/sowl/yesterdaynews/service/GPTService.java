@@ -1,4 +1,4 @@
-package se.sowl.yesterdayai.service;
+package se.sowl.yesterdaynews.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;

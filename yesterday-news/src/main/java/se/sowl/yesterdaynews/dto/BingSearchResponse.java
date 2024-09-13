@@ -1,4 +1,4 @@
-package se.sowl.yesterdayai.dto;
+package se.sowl.yesterdaynews.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
