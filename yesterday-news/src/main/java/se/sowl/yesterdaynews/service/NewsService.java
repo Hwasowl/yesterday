@@ -27,7 +27,6 @@ public class NewsService {
         newsRepository.saveAll(processedNews);
     }
 
-
     private List<News> processSearchResults(List<BingSearchResponse> searchResults) {
         List<String> newsItems = searchResults.stream()
             .map(this::formatNewsItem)
@@ -36,18 +35,19 @@ public class NewsService {
         List<String> summariesAndTags = gptService.summarizeAndTagNews(newsItems);
 
         List<News> processedNews = new ArrayList<>();
-        for (int i = 0; i < Math.min(searchResults.size(), summariesAndTags.size()); i++) {
+        for (int i = 0; i < searchResults.size(); i++) {
             BingSearchResponse response = searchResults.get(i);
-            String[] parts = summariesAndTags.get(i).split("\n");
-            if (parts.length >= 2) {
-                String summary = parts[0].replace("요약:", "").trim();
-                String tag = parts[1].replace("태그:", "").trim();
+            String result = summariesAndTags.get(i);
+            String[] parts = result.split("\n");
+            String summary = parts[0].replace("요약:", "").trim();
+            String tag = parts[1].replace("태그:", "").trim();
+
+            if (!summary.equals("처리 실패") && !tag.equals("오류")) {
                 processedNews.add(convertToNews(response, summary, tag));
             } else {
-                log.warn("Invalid summary or tag for news: {}", response.getTitle());
+                log.warn("뉴스 요약 실패: {}", response.getTitle());
             }
         }
-
         return processedNews;
     }
 
