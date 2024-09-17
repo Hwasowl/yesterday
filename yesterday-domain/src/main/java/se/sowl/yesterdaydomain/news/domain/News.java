@@ -33,17 +33,20 @@ public class News {
     @Column(name = "published_at")
     private LocalDateTime publishedAt;
 
+    private String tag;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
 
     @Builder
-    public News(String title, String content, String thumbnailUrl, String newsUrl, LocalDateTime publishedAt) {
+    public News(String title, String content, String thumbnailUrl, String newsUrl, LocalDateTime publishedAt, String tag) {
         this.title = title;
         this.content = content;
         this.thumbnailUrl = thumbnailUrl;
         this.newsUrl = newsUrl;
         this.publishedAt = publishedAt;
+        this.tag = tag;
     }
 }

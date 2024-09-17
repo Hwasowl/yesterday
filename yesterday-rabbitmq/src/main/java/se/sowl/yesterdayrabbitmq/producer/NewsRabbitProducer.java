@@ -1,18 +1,16 @@
-package se.sowl.yestdayrabbitmq.news;
+package se.sowl.yesterdayrabbitmq.producer;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+
+@Service
+@RequiredArgsConstructor
 public class NewsRabbitProducer {
     private final RabbitTemplate rabbitTemplate;
 
-    public NewsRabbitProducer(RabbitTemplate rabbitTemplate) {
-        this.rabbitTemplate = rabbitTemplate;
-    }
-
-    public void sendNewsUpdateMessage() {
-        String message = "UPDATE_NEWS";
+    public void sendNewsUpdateMessage(String message) {
         String routingKey = "news.update";
         String exchangeName = "news-exchange";
         rabbitTemplate.convertAndSend(exchangeName, routingKey, message);

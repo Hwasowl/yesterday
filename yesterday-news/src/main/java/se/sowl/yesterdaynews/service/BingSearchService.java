@@ -23,7 +23,7 @@ public class BingSearchService {
 
     public List<BingSearchResponse> getYesterdayNews() {
         HttpEntity<String> header = generateHttpHeader();
-        String searchUrl = "https://api.bing.microsoft.com/v7.0/news/search?q=한국 주요뉴스&freshness=Day&sortBy=Date&count=10&mkt=ko-KR";
+        String searchUrl = "https://api.bing.microsoft.com/v7.0/news/search?q=어제&sortBy=Date&count=15&mkt=ko-KR";
         List<Map<String, Object>> newsItems = search(searchUrl, header);
         return newsItems.stream()
             .map(BingSearchResponse::new)

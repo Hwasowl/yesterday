@@ -1,4 +1,4 @@
-package se.sowl.yestdayrabbitmq.config;
+package se.sowl.yesterdayrabbitmq.config;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -12,7 +12,7 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue newsQueue() {
-        return new Queue("news-queue", true);
+        return new Queue("news-update-queue", true);
     }
 
     @Bean
@@ -22,6 +22,6 @@ public class RabbitMQConfig {
 
     @Bean
     public Binding binding(Queue newsQueue, TopicExchange newsExchange) {
-        return BindingBuilder.bind(newsQueue).to(newsExchange).with("news.create");
+        return BindingBuilder.bind(newsQueue).to(newsExchange).with("news.update");
     }
 }

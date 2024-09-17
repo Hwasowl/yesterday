@@ -12,9 +12,9 @@ public class NewsController {
     private final NewsService newsService;
 
     @PostMapping("/yesterday")
-    public ResponseEntity.BodyBuilder createNews() {
+    public ResponseEntity<String> createNews() {
         newsService.saveYesterdayNews();
-        return ResponseEntity.ok();
+        return ResponseEntity.ok("OK");
     }
 
 }
