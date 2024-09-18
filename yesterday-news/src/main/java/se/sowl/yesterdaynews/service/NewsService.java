@@ -41,15 +41,19 @@ public class NewsService {
         List<News> processedNews = new ArrayList<>();
         for (int i = 0; i < searchResults.size(); i++) {
             BingSearchResponse response = searchResults.get(i);
-            String result = summariesAndTags.get(i);
+            String result = summariesAndTags.get(i).trim();
             String[] parts = result.split("\n");
-            String summary = parts[0].replace("요약:", "").trim();
-            String tag = parts[1].replace("태그:", "").trim();
+            if (parts.length >= 2) {
+                String summary = parts[0].replace("요약:", "").trim();
+                String tag = parts[1].replace("태그:", "").trim();
 
-            if (!summary.equals("처리 실패") && !tag.equals("오류")) {
-                processedNews.add(convertToNews(response, summary, tag));
+                if (!summary.equals("처리 실패") && !tag.equals("오류")) {
+                    processedNews.add(convertToNews(response, summary, tag));
+                } else {
+                    log.warn("뉴스 요약 실패: {}", response.getTitle());
+                }
             } else {
-                log.warn("뉴스 요약 실패: {}", response.getTitle());
+                log.warn("잘못된 형식의 요약 결과: {}", result);
             }
         }
         return processedNews;
