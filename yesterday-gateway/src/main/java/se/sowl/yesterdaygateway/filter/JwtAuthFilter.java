@@ -6,13 +6,16 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
@@ -22,13 +25,16 @@ import java.util.Date;
 @Component
 public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Config> {
 
+    private final WebClient.Builder webClientBuilder;
+
     @Value("${jwt.secret}")
     private String secretKey;
 
     private SecretKey key;
 
-    public JwtAuthFilter() {
+    public JwtAuthFilter(WebClient.Builder webClientBuilder) {
         super(Config.class);
+        this.webClientBuilder = webClientBuilder;
     }
 
     @PostConstruct
@@ -39,28 +45,31 @@ public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Co
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
-            log.debug("JwtAuthFilter processing request to: {}", exchange.getRequest().getPath());
-
-            String token = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-
+            ServerHttpRequest request = exchange.getRequest();
+            String token = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+            System.out.println(token);
             if (token != null && token.startsWith("Bearer ")) {
-                token = token.substring(7);
-                log.debug("Token found: {}", token);
-                if (validateToken(token)) {
-                    log.debug("Token is valid");
-                    return chain.filter(exchange);
-                } else {
-                    log.debug("Token is invalid");
-                    exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-                    return exchange.getResponse().setComplete();
-                }
-            } else {
-                log.debug("No token found or invalid token format");
-                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-                return exchange.getResponse().setComplete();
+                return webClientBuilder.build()
+                    .get()
+                    .uri("http://localhost:8080/api/auth/validate")
+                    .header(HttpHeaders.AUTHORIZATION, token)
+                    .retrieve()
+                    .bodyToMono(Boolean.class)
+                    .flatMap(isValid -> {
+                        if (isValid) {
+                            return chain.filter(exchange);
+                        } else {
+                            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                            return exchange.getResponse().setComplete();
+                        }
+                    });
             }
+
+            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+            return exchange.getResponse().setComplete();
         };
     }
+
 
     public boolean validateToken(String token) {
         try {
