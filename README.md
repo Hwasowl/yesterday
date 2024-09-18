@@ -1,3 +1,4 @@
+```mermaid
 graph TD
 subgraph "프론트엔드 (React)"
 A[Login 컴포넌트] --> B[App 컴포넌트]
