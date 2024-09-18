@@ -7,3 +7,12 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+azure:
+  bing-search:
+    api-key:
+
+openai:
+  api-key:
+  api-url:
+  retry-count: 3
