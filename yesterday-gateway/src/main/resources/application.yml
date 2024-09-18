@@ -1,0 +1,33 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: news-service
+          uri: http://localhost:8090
+          predicates:
+            - Path=/api/news/**
+          filters:
+            - JwtAuthFilter
+        - id: api-service
+          uri: http://localhost:8080
+          predicates:
+            - Path=/api/auth/**
+      default-filters:
+        - JwtAuthFilter
+
+  webflux:
+    base-path: /
+
+server:
+  port: 8070
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty: DEBUG
+    org.springframework.web.reactive: DEBUG
+    se.sowl.yesterdaygateway: DEBUG
+
+jwt:
+  secret:
+

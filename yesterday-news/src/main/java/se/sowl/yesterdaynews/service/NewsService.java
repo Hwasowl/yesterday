@@ -19,6 +19,10 @@ public class NewsService {
     private final GPTService gptService;
     private final NewsRepository newsRepository;
 
+    public List<News> getYesterdayNews() {
+        return newsRepository.findAll();
+    }
+
     public void saveYesterdayNews() {
         List<BingSearchResponse> searchResults = bingSearchService.getYesterdayNews();
         log.info("{} 개의 뉴스를 조회했습니다.", searchResults.size());

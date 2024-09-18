@@ -26,7 +26,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
         String jwt = jwtTokenProvider.createToken(authentication);
-
+        System.out.println("jwt = " + jwt);
         response.addHeader("Authorization", "Bearer " + jwt);
 
         Cookie cookie = new Cookie("jwt", jwt);
