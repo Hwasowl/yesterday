@@ -30,7 +30,7 @@ public class GPTService {
     private int maxRetries;
 
     public List<String> summarizeAndTagNews(List<String> newsItems) {
-        int batchSize = 10;
+        int batchSize = 15;
         List<String> results = new ArrayList<>();
 
         for (int i = 0; i < newsItems.size(); i += batchSize) {

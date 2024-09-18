@@ -42,18 +42,19 @@ public class NewsService {
         for (int i = 0; i < searchResults.size(); i++) {
             BingSearchResponse response = searchResults.get(i);
             String result = summariesAndTags.get(i).trim();
-            String[] parts = result.split("\n");
-            if (parts.length >= 2) {
-                String summary = parts[0].replace("요약:", "").trim();
-                String tag = parts[1].replace("태그:", "").trim();
 
-                if (!summary.equals("처리 실패") && !tag.equals("오류")) {
-                    processedNews.add(convertToNews(response, summary, tag));
-                } else {
-                    log.warn("뉴스 요약 실패: {}", response.getTitle());
-                }
+            String summary = "";
+            String tag = "";
+
+            if (result.contains("요약:") && result.contains("태그:")) {
+                summary = result.substring(result.indexOf("요약:") + 3, result.indexOf("태그:")).trim();
+                tag = result.substring(result.indexOf("태그:") + 3).trim();
+            }
+
+            if (!summary.isEmpty() && !tag.isEmpty()) {
+                processedNews.add(convertToNews(response, summary, tag));
             } else {
-                log.warn("잘못된 형식의 요약 결과: {}", result);
+                log.warn("뉴스 요약 실패: {}", response.getTitle());
             }
         }
         return processedNews;

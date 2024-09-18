@@ -27,7 +27,7 @@ public class News {
     @Column(name = "thumbnail_url")
     private String thumbnailUrl;
 
-    @Column(name = "news_url")
+    @Column(name = "news_url", length = 2000)
     private String newsUrl;
 
     @Column(name = "published_at")
