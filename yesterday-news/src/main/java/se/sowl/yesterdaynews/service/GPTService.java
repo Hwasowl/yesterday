@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +29,7 @@ public class GPTService {
     private int maxRetries;
 
     public List<String> summarizeAndTagNews(List<String> newsItems) {
-        int batchSize = 15;
+        int batchSize = 20;
         List<String> results = new ArrayList<>();
 
         for (int i = 0; i < newsItems.size(); i += batchSize) {

@@ -23,10 +23,11 @@ public class BingSearchService {
 
     public List<BingSearchResponse> getYesterdayNews() {
         HttpEntity<String> header = generateHttpHeader();
-        String searchUrl = "https://api.bing.microsoft.com/v7.0/news/search?q=어제&sortBy=Date&count=15&mkt=ko-KR";
+        String searchUrl = "https://api.bing.microsoft.com/v7.0/news/search?q=어제&sortBy=Date&count=20&mkt=ko-KR";
         List<Map<String, Object>> newsItems = search(searchUrl, header);
         return newsItems.stream()
             .map(BingSearchResponse::new)
+            .filter(this::hasThumbnail)
             .collect(Collectors.toList());
     }
 
@@ -39,6 +40,10 @@ public class BingSearchService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Ocp-Apim-Subscription-Key", bingSearchApiKey);
         return new HttpEntity<>(headers);
+    }
+
+    private boolean hasThumbnail(BingSearchResponse response) {
+        return response.getThumbnailUrl() != null && !response.getThumbnailUrl().isEmpty();
     }
 }
 

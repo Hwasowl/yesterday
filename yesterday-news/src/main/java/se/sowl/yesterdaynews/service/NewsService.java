@@ -38,23 +38,30 @@ public class NewsService {
 
         List<String> summariesAndTags = gptService.summarizeAndTagNews(newsItems);
 
+        log.info("검색 결과 수: {}, 요약 및 태그 수: {}", searchResults.size(), summariesAndTags.size());
+
         List<News> processedNews = new ArrayList<>();
         for (int i = 0; i < searchResults.size(); i++) {
             BingSearchResponse response = searchResults.get(i);
-            String result = summariesAndTags.get(i).trim();
+            if (i < summariesAndTags.size()) {
+                String result = summariesAndTags.get(i).trim();
 
-            String summary = "";
-            String tag = "";
+                String summary = "";
+                String tag = "";
 
-            if (result.contains("요약:") && result.contains("태그:")) {
-                summary = result.substring(result.indexOf("요약:") + 3, result.indexOf("태그:")).trim();
-                tag = result.substring(result.indexOf("태그:") + 3).trim();
-            }
+                if (result.contains("요약:") && result.contains("태그:")) {
+                    summary = result.substring(result.indexOf("요약:") + 3, result.indexOf("태그:")).trim();
+                    tag = result.substring(result.indexOf("태그:") + 3).trim();
+                }
 
-            if (!summary.isEmpty() && !tag.isEmpty()) {
-                processedNews.add(convertToNews(response, summary, tag));
+                if (!summary.isEmpty() && !tag.isEmpty()) {
+                    processedNews.add(convertToNews(response, summary, tag));
+                } else {
+                    log.warn("뉴스 요약 실패: {}", response.getTitle());
+                }
             } else {
-                log.warn("뉴스 요약 실패: {}", response.getTitle());
+                log.info(response.toString());
+                log.warn("GPT 서비스에서 요약을 생성하지 못했습니다: {}", response.getTitle());
             }
         }
         return processedNews;
@@ -68,7 +75,8 @@ public class NewsService {
         return News.builder()
             .title(cleanText(response.getTitle()))
             .newsUrl(response.getNewsUrl())
-            .content(cleanAndTruncate(summary, 200))
+            .content(cleanText(response.getContent()))
+            .aiContent(cleanAndTruncate(summary, 200))
             .publishedAt(response.getPublishedAt())
             .thumbnailUrl(response.getThumbnailUrl())
             .tag(cleanAndTruncate(tag, 30))

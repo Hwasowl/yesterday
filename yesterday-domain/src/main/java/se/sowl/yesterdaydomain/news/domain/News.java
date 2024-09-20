@@ -24,6 +24,9 @@ public class News {
     @Column(length = 5000)
     private String content;
 
+    @Column(length = 5000, name = "ai_content")
+    private String aiContent;
+
     @Column(name = "thumbnail_url")
     private String thumbnailUrl;
 
@@ -41,9 +44,10 @@ public class News {
 
 
     @Builder
-    public News(String title, String content, String thumbnailUrl, String newsUrl, LocalDateTime publishedAt, String tag) {
+    public News(String title, String content, String aiContent, String thumbnailUrl, String newsUrl, LocalDateTime publishedAt, String tag) {
         this.title = title;
         this.content = content;
+        this.aiContent = aiContent;
         this.thumbnailUrl = thumbnailUrl;
         this.newsUrl = newsUrl;
         this.publishedAt = publishedAt;

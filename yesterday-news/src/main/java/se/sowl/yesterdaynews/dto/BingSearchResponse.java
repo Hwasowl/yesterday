@@ -11,6 +11,8 @@ import java.util.Map;
 @AllArgsConstructor
 @Getter
 public class BingSearchResponse {
+    private static final String HIGH_QUALITY_SUFFIX = "&w=500&h=300&c=7";
+
     private String title;
     private String newsUrl;
     private String content;
@@ -28,7 +30,8 @@ public class BingSearchResponse {
         if (image != null) {
             Map<String, Object> thumbnail = (Map<String, Object>) image.get("thumbnail");
             if (thumbnail != null) {
-                this.thumbnailUrl = (String) thumbnail.get("contentUrl");
+                String url = (String) thumbnail.get("contentUrl");
+                this.thumbnailUrl = url != null ? url + HIGH_QUALITY_SUFFIX : null;
             }
         }
     }
