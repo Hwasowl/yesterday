@@ -8,7 +8,7 @@ tasks.named('jar'){
 
 bootJar {
     enabled = true
-    mainClass = 'se.sowl.yesterdaynews.YesterdayNewsApplication'
+    mainClass = 'se.sowl.yesterdaypayment.YesterdayPaymentApplication'
 }
 
 jar {
