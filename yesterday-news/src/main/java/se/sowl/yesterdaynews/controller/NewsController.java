@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.sowl.yesterdaydomain.news.domain.News;
-import se.sowl.yesterdaynews.service.NewsService;
+import se.sowl.yesterdaynews.service.news.NewsService;
 
 import java.util.List;
 

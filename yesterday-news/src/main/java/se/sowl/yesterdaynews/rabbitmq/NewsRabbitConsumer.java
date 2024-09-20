@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
-import se.sowl.yesterdaynews.service.NewsService;
+import se.sowl.yesterdaynews.service.news.NewsService;
 
 @Component
 @RequiredArgsConstructor
