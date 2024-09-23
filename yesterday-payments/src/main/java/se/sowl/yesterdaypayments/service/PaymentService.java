@@ -22,7 +22,7 @@ public class PaymentService {
     private final PaymentLogRepository paymentLogRepository;
     private final RestTemplate restTemplate;
 
-    @Value("${spring.rabbitmq.service.url}")
+    @Value("${rabbitmq.service.url}")
     private String RABBITMQ_SERVICE_URL;
 
     @Value("${toss.payments.secret-key}")
@@ -46,11 +46,15 @@ public class PaymentService {
                 return;
             }
             recordPaymentStatus(paymentLog, PaymentStatus.SUCCESS);
-            restTemplate.postForObject(RABBITMQ_SERVICE_URL, generateSuccessEventMessage(paymentLog), String.class);
+            issueRegisterMembershipMessage(paymentLog);
         } catch (Exception e) {
             recordPaymentStatus(paymentLog, PaymentStatus.FAILED);
             throw new RuntimeException("결제 요청에 실패했어요. 사유: ", e);
         }
+    }
+
+    private void issueRegisterMembershipMessage(PaymentLog paymentLog) {
+        restTemplate.postForObject(RABBITMQ_SERVICE_URL, generateSuccessEventMessage(paymentLog), String.class);
     }
 
     private static PaymentSuccessEvent generateSuccessEventMessage(PaymentLog paymentLog) {

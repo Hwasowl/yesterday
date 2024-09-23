@@ -5,7 +5,7 @@ spring:
       username: guest
       password: guest
       service:
-        url: http://localhost:9000/api/message
+        url: http://localhost:9000/rabbitmq/news/update
 
 
 server:
