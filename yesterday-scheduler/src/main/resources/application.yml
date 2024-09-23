@@ -4,6 +4,9 @@ spring:
       port: 5672
       username: guest
       password: guest
+      service:
+        url: http://localhost:9000/api/message
+
 
 server:
   port: 9010

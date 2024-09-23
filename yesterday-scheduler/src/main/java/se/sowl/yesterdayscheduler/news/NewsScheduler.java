@@ -2,16 +2,18 @@ package se.sowl.yesterdayscheduler.news;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
-@Slf4j
 public class NewsScheduler {
     private final RestTemplate restTemplate;
-    private static final String RABBITMQ_SERVICE_URL = "http://localhost:9000/api/message";
+    @Value("${spring.rabbitmq.service.url}")
+    private String RABBITMQ_SERVICE_URL;
 
     @Scheduled(cron = "0 0 8 * * ?")
     public void scheduleNewsUpdate() {

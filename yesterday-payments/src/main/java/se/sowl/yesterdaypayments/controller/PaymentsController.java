@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import se.sowl.yesterdaydomain.payment.domain.PaymentLog;
-import se.sowl.yesterdaypayments.dto.PaymentCallbackRequest;
 import se.sowl.yesterdaypayments.dto.PaymentConfirmRequest;
 import se.sowl.yesterdaypayments.dto.PaymentRequest;
 import se.sowl.yesterdaypayments.dto.PaymentResponse;

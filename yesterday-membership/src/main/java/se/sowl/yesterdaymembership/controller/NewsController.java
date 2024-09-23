@@ -1,10 +1,9 @@
-package se.sowl.yesterdaynews.controller;
+package se.sowl.yesterdaymembership.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.sowl.yesterdaydomain.news.domain.News;
-import se.sowl.yesterdaynews.service.news.NewsService;
 
 import java.util.List;
 
@@ -13,10 +12,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class NewsController {
 
-    @GetMapping("/yesterday")
-    public ResponseEntity<List<News>> getYesterdayNews() {
-        return ResponseEntity.ok(newsService.getYesterdayNews());
-    }
+//    @GetMapping("/yesterday")
+//    public ResponseEntity<List<News>> getYesterdayNews() {
+//        return ResponseEntity.ok(newsService.getYesterdayNews());
+//    }
 
     @PostMapping("/yesterday")
     public ResponseEntity<String> createNews() {
