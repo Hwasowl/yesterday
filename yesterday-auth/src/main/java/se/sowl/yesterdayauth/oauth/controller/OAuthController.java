@@ -39,4 +39,11 @@ public class OAuthController {
         boolean b = jwtTokenProvider.validateToken(token);
         return ResponseEntity.ok(b);
     }
+
+    @GetMapping("/user-info")
+    public ResponseEntity<Long> getUserInfo(@RequestHeader("Authorization") String token) {
+        token = token.substring(7);
+        Long userId = jwtTokenProvider.getUserIdFromToken(token);
+        return ResponseEntity.ok(userId);
+    }
 }

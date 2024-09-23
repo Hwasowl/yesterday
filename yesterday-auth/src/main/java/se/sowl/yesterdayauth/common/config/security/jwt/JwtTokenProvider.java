@@ -18,6 +18,8 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 import io.jsonwebtoken.security.Keys;
+import se.sowl.yesterdaydomain.user.domain.CustomOAuth2User;
+
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 
@@ -40,6 +42,10 @@ public class JwtTokenProvider {
     public String createToken(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         Claims claims = Jwts.claims().setSubject(userDetails.getUsername());
+
+        if (authentication.getPrincipal() instanceof CustomOAuth2User customOAuth2User) {
+            claims.put("userId", customOAuth2User.getUser().getId());
+        }
         claims.put("roles", userDetails.getAuthorities().stream()
             .map(GrantedAuthority::getAuthority)
             .collect(Collectors.joining(",")));
@@ -69,6 +75,15 @@ public class JwtTokenProvider {
 
         UserDetails principal = new User(claims.getSubject(), "", authorities);
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
+    }
+
+    public Long getUserIdFromToken(String token) {
+        Claims claims = Jwts.parserBuilder()
+            .setSigningKey(key)
+            .build()
+            .parseClaimsJws(token)
+            .getBody();
+        return claims.get("userId", Long.class);
     }
 
     public boolean validateToken(String token) {
