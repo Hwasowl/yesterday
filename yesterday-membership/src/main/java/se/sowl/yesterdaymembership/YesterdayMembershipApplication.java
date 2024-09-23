@@ -7,8 +7,8 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
-@EnableJpaRepositories(basePackages = "se.sowl.yesterdaydomain.news.repository")
-@EntityScan(basePackages = "se.sowl.yesterdaydomain.news.domain")
+@EnableJpaRepositories(basePackages = "se.sowl.yesterdaydomain.membership.repository")
+@EntityScan(basePackages = "se.sowl.yesterdaydomain.membership.domain")
 public class YesterdayMembershipApplication {
 
     public static void main(String[] args) {

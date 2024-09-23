@@ -16,12 +16,27 @@ public class RabbitMQConfig {
     }
 
     @Bean
+    public Queue membershipQueue() {
+        return new Queue("membership-register-queue", true);
+    }
+
+    @Bean
     public TopicExchange newsExchange() {
         return new TopicExchange("news-exchange");
     }
 
     @Bean
-    public Binding binding(Queue newsQueue, TopicExchange newsExchange) {
+    public TopicExchange membershipExchange() {
+        return new TopicExchange("membership-exchange");
+    }
+
+    @Bean
+    public Binding newsBinding(Queue newsQueue, TopicExchange newsExchange) {
         return BindingBuilder.bind(newsQueue).to(newsExchange).with("news.update");
+    }
+
+    @Bean
+    public Binding membershipBinding(Queue membershipQueue, TopicExchange membershipExchange) {
+        return BindingBuilder.bind(membershipQueue).to(membershipExchange).with("membership.register");
     }
 }

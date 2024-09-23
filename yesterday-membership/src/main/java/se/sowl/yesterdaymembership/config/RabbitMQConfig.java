@@ -9,6 +9,6 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue newsQueue() {
-        return new Queue("add-membership-queue", true);
+        return new Queue("membership-register-queue", true);
     }
 }
